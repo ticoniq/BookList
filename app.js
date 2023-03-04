@@ -6,10 +6,10 @@ function Book(title, author, isbn) {
 }
 
 // US constructor 
-function UI() {}
+function UI() { }
 
 // Add to table list 
-UI.prototype.addBookToList = function(book){
+UI.prototype.addBookToList = function (book) {
   const list = document.getElementById('book-list');
 
   // Create table row element
@@ -27,30 +27,59 @@ UI.prototype.addBookToList = function(book){
   list.appendChild(row);
 }
 
-UI.prototype.clearFields = function(){
+UI.prototype.showAlert = function(message, className){
+  // create ui div element 
+  const div = document.createElement('div');
+  // Add class name 
+  div.className = `alert ${className}`;
+  div.appendChild(document.createTextNode(message));
+  // get parrent div 
+  const container = document.querySelector('.container');
+  // Get form
+  const form = document.querySelector('#book-form'); 
+  // Insert Alert 
+  container.insertBefore(div, form);
+  // set timeout after 3 s 
+  // setTimeout(function() {
+  //   document.querySelector('.alert').remove();
+  // }, 3000);
+
+  setTimeout(() => {
+    document.querySelector('.alert').remove();
+  }, 3000);
+}
+
+UI.prototype.clearFields = function () {
   const title = document.getElementById('title').value = '',
-        author = document.getElementById('author').value = '',  
-        isbn = document.getElementById('isbn').value = '';
+    author = document.getElementById('author').value = '',
+    isbn = document.getElementById('isbn').value = '';
 }
 
 // Event listener
-document.getElementById('book-form').addEventListener('submit', function(e){
+document.getElementById('book-form').addEventListener('submit', function (e) {
   // GEt form values 
   const title = document.getElementById('title').value,
-        author = document.getElementById('author').value,  
-        isbn = document.getElementById('isbn').value;
-  
+    author = document.getElementById('author').value,
+    isbn = document.getElementById('isbn').value;
+
   // Instanciate book 
   const book = new Book(title, author, isbn);
 
   // Instanciate
   const ui = new UI();
-  
-  // Add book to table list using prototype
-  ui.addBookToList(book);
 
-  // clear Fields
-  ui.clearFields();
-  
+  // Validate 
+  if (title === '' || author === '' || isbn === '') {
+    // Error alert 
+    ui.showAlert('All fields are required', 'error');
+  } else {
+    // Add book to table list using prototype
+    ui.addBookToList(book);
+    // Success alert 
+    ui.showAlert('Book added successfully', 'success');
+    // clear Fields
+    ui.clearFields();
+  }
+
   e.preventDefault();
 });
