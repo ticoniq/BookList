@@ -20,7 +20,7 @@ If you would like to contribute to this project, please create a pull request wi
 
 ## Credits
 
-This project was created by [Tconiq](https://github.com/ticoniq).
+This project was created by [Tconiq](https://github.com/ticoniq) with the help of Brad Traversy.
 
 ## License
 
